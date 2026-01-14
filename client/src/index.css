@@ -432,7 +432,7 @@
 
 @media (max-width: 576px) {
     .chocolate {
-        background-image: url('%PUBLIC_URL%/images/paper_1_portrait.jpg');
+        background-image: var(--bg-portrait);
     }
 
     .mgSmFont {
@@ -459,7 +459,7 @@
 
 @media (min-width: 576px) {
     .chocolate {
-        background-image: url('%PUBLIC_URL%/images/paper_1_portrait.jpg');
+        background-image: var(--bg-portrait);
     }
 
     .filling {
@@ -481,7 +481,7 @@
 
 @media (min-width: 992px) {
     .chocolate {
-        background-image: url('%PUBLIC_URL%/images/paper_1_landscape.jpg');
+        background-image: var(--bg-landscape);
         background-size: 100%;
     }
 

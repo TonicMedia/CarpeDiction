@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Set CSS custom properties for public assets
+const publicUrl = process.env.PUBLIC_URL || '';
+const root = document.documentElement;
+root.style.setProperty('--bg-portrait', `url(${publicUrl}/images/paper_1_portrait.jpg)`);
+root.style.setProperty('--bg-landscape', `url(${publicUrl}/images/paper_1_landscape.jpg)`);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
