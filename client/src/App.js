@@ -20,7 +20,7 @@ import Update from './views/Update';
 function App() {
 
     //sets URL for dev/prod
-    const envUrl = process.env.REACT_APP_NODE_ENV === 'production' ? process.env.REACT_APP_API_ROOT : "http://localhost:8000"
+    const envUrl = process.env.REACT_APP_NODE_ENV === 'production' ? process.env.REACT_APP_NODE_API_ROOT : "http://localhost:8000"
 
     // state variable to hold logged in User
     const [logged, setLogged] = useState(

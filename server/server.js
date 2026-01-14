@@ -49,7 +49,7 @@ setInterval(
                 Wotd.word = $("h1:first").text().trim();
                 Wotd.def = "";
                 console.log(Wotd);
-                axios.post(`${process.env.API_ROOT}/api/wotd/add`, Wotd)
+                axios.post(`${process.env.NODE_API_ROOT}/api/wotd/add`, Wotd)
                     .then(res => console.log(res.data))
                     .catch(err => console.log(err));
             })

@@ -18,12 +18,12 @@ These variables are used in the `server/` directory and should be set in a `.env
   - `server/controllers/user.controller.js` (lines 27, 28, 217, 218)
 - **Description**: Determines CORS settings and cookie security settings
 
-### 3. `API_ROOT`
+### 3. `NODE_API_ROOT`
 - **Usage**: API root URL
 - **Location**: `server/server.js` (line 52)
 - **Description**: Base URL for API endpoints (used for WOTD posting)
 
-### 4. `JWT_KEY`
+### 4. `CD_JWT_KEY`
 - **Usage**: JWT secret key for token signing and verification
 - **Locations**: 
   - `server/controllers/user.controller.js` (lines 25, 215)
@@ -34,6 +34,18 @@ These variables are used in the `server/` directory and should be set in a `.env
 - **Usage**: MongoDB database connection URL
 - **Location**: `server/config/mongoose.config.js` (line 2)
 - **Description**: Full MongoDB connection string/URI
+- **Format**: Must start with `mongodb://` or `mongodb+srv://`
+- **How to get it**:
+  - **MongoDB Atlas (Cloud)**: 
+    1. Go to https://cloud.mongodb.com
+    2. Select your cluster → Click "Connect"
+    3. Choose "Connect your application"
+    4. Copy the connection string (format: `mongodb+srv://username:password@cluster.mongodb.net/database-name`)
+    5. Replace `<password>` with your database user password
+    6. Replace `<dbname>` with your database name (or remove it)
+  - **Local MongoDB**: `mongodb://localhost:27017/your-database-name`
+  - **Render/Production**: Check your MongoDB service dashboard for the connection string
+- **Example**: `mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/carpediction?retryWrites=true&w=majority`
 
 ## Client-Side Environment Variables
 
@@ -66,7 +78,7 @@ These variables are used in the `client/` directory. React requires environment 
 - **Location**: `client/src/App.js` (line 23)
 - **Description**: Determines which API URL to use (production vs development)
 
-### 5. `REACT_APP_API_ROOT`
+### 5. `REACT_APP_NODE_API_ROOT`
 - **Usage**: React app API root URL
 - **Location**: `client/src/App.js` (line 23)
 - **Description**: Base URL for the backend API when in production mode
