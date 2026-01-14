@@ -8,6 +8,7 @@
     "url": "https://git.heroku.com/carpe-diction.git"
   },
   "scripts": {
+    "start": "cd server && node server.js",
     "client:start": "cd client && react-scripts start",
     "client:build": "cd client && react-scripts build",
     "client:test": "cd client && react-scripts test",
