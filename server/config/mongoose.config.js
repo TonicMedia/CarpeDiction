@@ -22,9 +22,7 @@ if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
 }
 
 // configures the Mongoose connection to the MongoDB
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+// Note: useNewUrlParser and useUnifiedTopology are default in Mongoose 7+
+mongoose.connect(uri)
     .then(() => console.log("Established a connection to the database"))
     .catch(err => console.log("Something went wrong when connecting to the database", err));
