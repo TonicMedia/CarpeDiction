@@ -8,7 +8,7 @@
     "url": "https://git.heroku.com/carpe-diction.git"
   },
   "scripts": {
-    "start": "cd server && yarn start",
+    "start": "cd server && yarn install && yarn start",
     "build": "cd client && yarn install && yarn build",
     "postinstall": "cd client && yarn install && cd ../server && yarn install",
     "client:start": "cd client && yarn start",
