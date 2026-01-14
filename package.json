@@ -28,7 +28,7 @@
     "axios": "^0.21.4",
     "bcrypt": "^5.1.0",
     "bootstrap": "^4.6.2",
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "1.0.0-rc.12",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -37,6 +37,7 @@
     "jquery": "^3.6.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.15",
+    "bson": "^6.3.0",
     "node-pre-gyp": "^0.17.0",
     "nodejs": "0.0.0",
     "nodemon": "^2.0.20",
@@ -70,5 +71,8 @@
   "engines": {
     "yarn": ">=1.0.0",
     "node": ">=14.0.0"
+  },
+  "resolutions": {
+    "bson": "^6.3.0"
   }
 }
