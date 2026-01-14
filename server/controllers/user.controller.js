@@ -22,7 +22,7 @@ module.exports.register = (req, res) => {
                                         res
                                             .cookie(
                                                 "usertoken",
-                                                jwt.sign({ _id: userNew._id }, process.env.JWT_KEY, { expiresIn: '1d' }),
+                                                jwt.sign({ _id: userNew._id }, process.env.CD_JWT_KEY, { expiresIn: '1d' }),
                                                 {
                                                     secure: process.env.NODE_ENV === 'production' ? true : false,
                                                     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
@@ -212,7 +212,7 @@ module.exports.login = (req, res) => {
                             res
                                 .cookie(
                                     "usertoken",
-                                    jwt.sign({ _id: user._id }, process.env.JWT_KEY, { expiresIn: '1d' }),
+                                    jwt.sign({ _id: user._id }, process.env.CD_JWT_KEY, { expiresIn: '1d' }),
                                     {
                                         secure: process.env.NODE_ENV === 'production' ? true : false,
                                         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
