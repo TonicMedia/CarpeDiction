@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Link, navigate } from '@reach/router';
 
-import cd_icon from '../../images/cd_icon.png';
+const cd_icon = process.env.PUBLIC_URL + '/images/cd_icon.png';
 
 import { Button } from 'react-bootstrap';
 

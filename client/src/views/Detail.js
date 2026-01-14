@@ -6,8 +6,8 @@ import { Link, navigate } from '@reach/router';
 import FavoritesAZ from '../components/user/FavoritesAZ';
 import FavoritesNew from '../components/user/FavoritesNew';
 import ImportExportFavs from '../components/user/ImportExportFavs';
-import NavBar from '../components/NavBar';
-import StickyFooter from '../components/StickyFooter';
+import NavBar from '../components/common/NavBar';
+import StickyFooter from '../components/common/StickyFooter';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Divider } from "@material-ui/core";

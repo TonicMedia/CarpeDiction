@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
-import carpe_diction from '../images/carpe_diction.png';
+const carpe_diction = process.env.PUBLIC_URL + '/images/carpe_diction.png';
 
 import FoundersNote from '../components/main/FoundersNote';
 import Links from '../components/main/Links';
-import NavBar from '../components/NavBar';
-import StickyFooter from '../components/StickyFooter';
+import NavBar from '../components/common/NavBar';
+import StickyFooter from '../components/common/StickyFooter';
 import TipJars from '../components/main/TipJars';
 import WotdCard from '../components/main/WotdCard';
 

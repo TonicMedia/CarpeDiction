@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { navigate } from '@reach/router';
 
-import like_icon_purple from '../../images/like_icon_purple.png';
-import like_icon_orange from '../../images/like_icon_orange.png';
+const like_icon_purple = process.env.PUBLIC_URL + '/images/like_icon_purple.png';
+const like_icon_orange = process.env.PUBLIC_URL + '/images/like_icon_orange.png';
 
 import DeleteButton from '../user/DeleteButton';
 

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { navigate } from '@reach/router';
 
-import fav_icon_gray from '../../images/fav_icon_gray.png';
-import fav_icon_orange from '../../images/fav_icon_orange.png';
+const fav_icon_gray = process.env.PUBLIC_URL + '/images/fav_icon_gray.png';
+const fav_icon_orange = process.env.PUBLIC_URL + '/images/fav_icon_orange.png';
 
 import HeadWords from './HeadWords';
 

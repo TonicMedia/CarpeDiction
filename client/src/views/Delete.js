@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { navigate } from '@reach/router';
 
 import DeleteButton from '../components/user/DeleteButton';
-import NavBar from '../components/NavBar';
-import StickyFooter from '../components/StickyFooter';
+import NavBar from '../components/common/NavBar';
+import StickyFooter from '../components/common/StickyFooter';
 
 import { Button } from 'react-bootstrap';
 

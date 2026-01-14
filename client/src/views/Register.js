@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
 
-import NavBar from '../components/NavBar';
-import StickyFooter from '../components/StickyFooter';
+import NavBar from '../components/common/NavBar';
+import StickyFooter from '../components/common/StickyFooter';
 import UserForm from '../components/user/UserForm';
 
 import CssBaseline from '@material-ui/core/CssBaseline';

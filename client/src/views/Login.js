@@ -4,8 +4,8 @@ import axios from 'axios';
 import { navigate } from '@reach/router';
 
 import LoginForm from '../components/user/LoginForm';
-import NavBar from '../components/NavBar';
-import StickyFooter from '../components/StickyFooter';
+import NavBar from '../components/common/NavBar';
+import StickyFooter from '../components/common/StickyFooter';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';

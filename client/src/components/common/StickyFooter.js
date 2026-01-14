@@ -4,7 +4,7 @@ const gh_icon = process.env.PUBLIC_URL + '/images/github_icon_square_orange.png'
 const ig_icon = process.env.PUBLIC_URL + '/images/ig_icon_square_orange.png';
 const li_icon = process.env.PUBLIC_URL + '/images/linkedin_icon_square_orange.png';
 
-import Copyright from '../components/Copyright'
+import Copyright from './Copyright'
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
