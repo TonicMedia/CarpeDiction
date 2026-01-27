@@ -1,3 +1,5 @@
+# Single Web Service only. Do NOT add a Static Site or set a Publish directory;
+# that causes "Publish directory build does not exist!"—this app serves the build from the Node server.
 services:
   - type: web
     name: carpe-diction

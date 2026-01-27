@@ -16,6 +16,8 @@ From the root, run `yarn install` then `yarn dev` so the UI and API both run; ch
 
 Prereqs: GitHub repo, Render account, MongoDB (e.g. Atlas).
 
+**Important:** Use a single **Web Service** only. Do not create a Static Site or set a "Publish directory" for this repo—that causes "Publish directory build does not exist!" The Node server serves the React build from `client/build` in production.
+
 1. **Backend as Web Service**
    - New Web Service → connect repo.
    - **Build command:** `yarn install && yarn run render-postbuild && cd server && yarn install`
