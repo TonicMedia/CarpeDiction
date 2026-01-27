@@ -8,12 +8,6 @@
     "start": "cd server && yarn start",
     "build": "yarn install && yarn run render-postbuild && cd server && yarn install",
     "server": "cd server && yarn start",
-    "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "client": "cd client && yarn start",
-    "clientinstall": "cd client && yarn install",
-    "client:build": "cd client && yarn build",
-    "client:test": "cd client && yarn test",
-    "client:eject": "cd client && yarn eject",
     "render-postbuild": "cd client && yarn install && yarn build",
     "install:all": "yarn install && cd client && yarn install && cd ../server && yarn install"
   },
