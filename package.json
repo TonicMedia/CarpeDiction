@@ -6,6 +6,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "cd server && yarn start",
+    "build": "yarn install && yarn run render-postbuild && cd server && yarn install",
     "server": "cd server && yarn start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
     "client": "cd client && yarn start",
