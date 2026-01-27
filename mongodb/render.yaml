@@ -1,0 +1,9 @@
+services:
+  - type: pserv
+    name: mongodb
+    env: docker
+    autoDeploy: false
+    disk:
+      name: data
+      mountPath: /data/db
+      sizeGB: 10
