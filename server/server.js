@@ -1,6 +1,7 @@
 // configures axios and imports cheerio parser for WOTD retrieval
 const axios = require('axios');
 const cheerio = require('cheerio');
+const path = require('path');
 
 // configures dotenv and mongoose
 require('dotenv').config();
@@ -12,8 +13,7 @@ const express = require('express'),
     app = express(),
     cors = require('cors'),
     cookieParser = require('cookie-parser'),
-    port = process.env.PORT,
-    server = app.listen(port, () => console.log(`Listening on port ${port}`));
+    port = process.env.PORT;
 
 
 // configuers and registers middleware
@@ -32,6 +32,18 @@ app.use(express.urlencoded({ extended: true }));
 require('./routes/user.routes')(app);
 require('./routes/wotd.routes')(app);
 require('./routes/comment.routes')(app);
+
+
+// serve static assets in production (React build) — must be after API routes
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    });
+}
+
+
+const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
 
 // scrapes a random WOTD every 24 hours and saves it to the db

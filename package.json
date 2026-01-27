@@ -6,14 +6,18 @@
   "main": "server/server.js",
   "scripts": {
     "start": "cd server && yarn start",
-    "dev": "cd server && yarn dev",
-    "build": "cd client && yarn install && yarn build",
-    "postinstall": "cd client && yarn install",
-    "client:start": "cd client && yarn start",
+    "server": "cd server && yarn start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "client": "cd client && yarn start",
+    "clientinstall": "cd client && yarn install",
     "client:build": "cd client && yarn build",
     "client:test": "cd client && yarn test",
     "client:eject": "cd client && yarn eject",
+    "render-postbuild": "cd client && yarn install && yarn build",
     "install:all": "yarn install && cd client && yarn install && cd ../server && yarn install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   },
   "engines": {
     "yarn": ">=1.0.0",
