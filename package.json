@@ -1,0 +1,26 @@
+{
+  "name": "carpe-diction",
+  "version": "1.0.0",
+  "description": "CarpeDiction.com - A dictionary-like compendium with lexical APIs",
+  "private": true,
+  "main": "server/server.js",
+  "scripts": {
+    "start": "cd server && yarn start",
+    "dev": "cd server && yarn dev",
+    "build": "cd client && yarn install && yarn build",
+    "postinstall": "cd client && yarn install",
+    "client:start": "cd client && yarn start",
+    "client:build": "cd client && yarn build",
+    "client:test": "cd client && yarn test",
+    "client:eject": "cd client && yarn eject",
+    "install:all": "yarn install && cd client && yarn install && cd ../server && yarn install"
+  },
+  "engines": {
+    "yarn": ">=1.0.0",
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/carpe-diction.git"
+  }
+}
