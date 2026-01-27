@@ -2,7 +2,7 @@ services:
   - type: web
     name: carpe-diction
     runtime: node
-    buildCommand: cd client && yarn install && yarn build
+    buildCommand: yarn install && yarn run render-postbuild && cd server && yarn install
     startCommand: cd server && yarn start
     envVars:
       - key: NODE_ENV
