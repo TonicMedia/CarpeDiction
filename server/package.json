@@ -5,6 +5,7 @@
   "private": true,
   "main": "server.js",
   "scripts": {
+    "prestart": "yarn install",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },

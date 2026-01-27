@@ -3,7 +3,6 @@ services:
     name: carpe-diction
     runtime: node
     buildCommand: cd client && yarn install && yarn build
-    preDeployCommand: cd server && yarn install --production=false
     startCommand: cd server && yarn start
     envVars:
       - key: NODE_ENV
