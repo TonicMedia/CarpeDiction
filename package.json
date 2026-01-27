@@ -5,6 +5,7 @@
   "private": true,
   "main": "server.js",
   "scripts": {
+    "prestart": "yarn install --production=false",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "build": "cd client && yarn install && yarn build",
