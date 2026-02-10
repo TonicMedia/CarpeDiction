@@ -150,7 +150,7 @@ const UserForm = props => {
                                 id="userName"
                                 label="Username:"
                                 name="userName"
-                                placeholder={user.userName}
+                                value={user.userName ?? ''}
                                 autoComplete="username"
                                 onChange={handleInputChange}
                             />
@@ -178,7 +178,7 @@ const UserForm = props => {
                                 id="email"
                                 label="Email:"
                                 name="email"
-                                placeholder={user.email}
+                                value={user.email ?? ''}
                                 autoComplete="email"
                                 onChange={handleInputChange}
                             />
@@ -207,6 +207,7 @@ const UserForm = props => {
                                 label="Password:"
                                 type="password"
                                 id="password"
+                                value={user.password ?? ''}
                                 autoComplete="current-password"
                                 onChange={handleInputChange}
                             />
@@ -235,6 +236,7 @@ const UserForm = props => {
                                 label="Confirm Password:"
                                 type="password"
                                 id="passwordConf"
+                                value={user.passwordConf ?? ''}
                                 autoComplete="current-password"
                                 onChange={handleInputChange}
                             />

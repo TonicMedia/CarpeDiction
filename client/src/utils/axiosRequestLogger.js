@@ -7,7 +7,7 @@
 import axios from 'axios';
 
 const SENSITIVE_HEADERS = ['authorization', 'cookie'];
-const SENSITIVE_BODY_KEYS = ['password', 'confirmPassword', 'currentPassword', 'newPassword', 'token', 'apiKey', 'secret'];
+const SENSITIVE_BODY_KEYS = ['password', 'passwordConf', 'confirmPassword', 'currentPassword', 'newPassword', 'token', 'apiKey', 'secret'];
 const SENSITIVE_QUERY_PARAMS = ['key', 'api_key', 'apikey', 'token', 'secret'];
 
 function safeLog(level, ...args) {
@@ -112,13 +112,19 @@ axios.interceptors.response.use(
       const fullUrl = error?.config?.baseURL
         ? `${error.config.baseURL.replace(/\/$/, '')}/${(error.config.url || '').replace(/^\//, '')}`
         : url;
+      const method = error?.config?.method?.toUpperCase() || 'GET';
       safeLog(
         'warn',
         '[response error]',
         status ?? error?.message ?? 'Network error',
-        error?.config?.method?.toUpperCase() || 'GET',
+        method,
         redactUrl(fullUrl)
       );
+      // Log response body for 4xx so validation/error messages are visible (redacted)
+      const data = error?.response?.data;
+      if (data != null && status >= 400 && status < 500 && typeof data === 'object') {
+        safeLog('warn', '[response error body]', redactBody(data));
+      }
     } catch (_) {
       // no-op
     }

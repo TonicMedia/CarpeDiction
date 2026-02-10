@@ -56,13 +56,20 @@ const Register = props => {
     // API post function; to be passed down to the RegForm
     const createUser = user => {
         setErrors([]);
-        axios.post(`${envUrl}/api/register`, user, { withCredentials: true })
+        // Trim and normalize payload to match server expectations (avoids 400 from empty/whitespace)
+        const payload = {
+            userName: String(user.userName ?? '').trim(),
+            email: String(user.email ?? '').trim(),
+            password: user.password ?? '',
+            passwordConf: user.passwordConf ?? '',
+        };
+        axios.post(`${envUrl}/api/register`, payload, { withCredentials: true })
             .then(res => {
                 if (res.data.user) {
                     setLogged(res.data.user);
                     navigate("/");
                 } else {
-                    setErrors(res.data);
+                    setErrors(Array.isArray(res.data) ? res.data : ['Registration failed.']);
                 }
             })
             .catch(err => {
