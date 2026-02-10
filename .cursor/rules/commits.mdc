@@ -5,4 +5,5 @@ alwaysApply: true
 
 # Commits
 
-- **Never mention the IDE or tool name** in commit messages. Use neutral, descriptive messages only (e.g. "Add WOTD scrape on startup").
+- **Never mention the IDE or tool name** (including the word "cursor") in commit messages. Use neutral, descriptive messages only (e.g. "Add WOTD scrape on startup").
+- **Never add git trailers** (e.g. Co-authored-by, Signed-off-by) to commits.
