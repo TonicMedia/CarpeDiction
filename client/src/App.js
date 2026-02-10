@@ -19,8 +19,10 @@ import Update from './views/Update';
 // React client routing setup
 function App() {
 
-    //sets URL for dev/prod
-    const envUrl = process.env.REACT_APP_NODE_ENV === 'production' ? process.env.REACT_APP_API_ROOT : "http://localhost:8000"
+    // API base URL: use NODE_ENV (set to 'production' by CRA at build time) so production build uses REACT_APP_API_ROOT
+    const envUrl = process.env.NODE_ENV === 'production'
+        ? (process.env.REACT_APP_API_ROOT || (typeof window !== 'undefined' ? window.location.origin : ''))
+        : 'http://localhost:8000';
 
     // state variable to hold logged in User
     const [logged, setLogged] = useState(
