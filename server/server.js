@@ -1,3 +1,11 @@
+// Suppress DEP0169 url.parse() deprecation from dependencies (e.g. MongoDB driver)
+const origEmitWarning = process.emitWarning;
+process.emitWarning = function (warning, ...args) {
+    const msg = typeof warning === 'string' ? warning : (warning && warning.message) || '';
+    if (msg.includes('url.parse') && msg.includes('DEP0169')) return;
+    return origEmitWarning.apply(process, [warning, ...args]);
+};
+
 // configures axios and imports cheerio parser for WOTD retrieval
 const axios = require('axios');
 const cheerio = require('cheerio');

@@ -34,6 +34,7 @@ These variables are used in the `server/` directory and should be set in a `.env
 - **Usage**: MongoDB database connection URL
 - **Location**: `server/config/mongoose.config.js` (line 2)
 - **Description**: Full MongoDB connection string/URI
+- **MongoDB Atlas**: If you see `querySrv ECONNREFUSED`, your SRV URI is being blocked. In Atlas go to **Connect → Drivers**, choose **Connection method: Standard**, and use the `mongodb://...` URI (not `mongodb+srv://...`) in `server/.env`. Ensure **Network Access** allows your IP (or 0.0.0.0/0 for development).
 
 ## Client-Side Environment Variables
 

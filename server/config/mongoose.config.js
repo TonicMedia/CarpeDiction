@@ -30,11 +30,18 @@ mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 15000,
+    bufferCommands: true,
+    bufferTimeoutMS: 30000,
 })
     .then(() => console.log("Established a connection to the database"))
     .catch(err => {
         console.error("Something went wrong when connecting to the database:", err.message);
         if (err.message && err.message.includes("querySrv ECONNREFUSED")) {
-            console.error("Tip: If using MongoDB Atlas, try the 'Standard connection string' (not SRV) in Atlas Connect dialog, or check network/firewall and Atlas IP access list.");
+            console.error("");
+            console.error("Atlas SRV connection failed (DNS/network). Use the STANDARD connection string instead:");
+            console.error("  1. In Atlas: Cluster → Connect → Drivers → look for 'Connection method: Standard'");
+            console.error("  2. Copy the URI that starts with mongodb:// (not mongodb+srv://)");
+            console.error("  3. Set CD_DB_URL in server/.env to that URI");
+            console.error("Also check: Atlas → Network Access allows your IP (or 0.0.0.0/0 for dev).");
         }
     });

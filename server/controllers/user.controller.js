@@ -3,21 +3,42 @@ const User = require("../models/user.model"),
     bcrypt = require('bcrypt'),
     jwt = require('jsonwebtoken');
 
-
+// normalize Mongoose validation (and similar) errors to { errors: { field: { message } } } for client
+function toValidationStyle(err, res) {
+    if (err.name === 'ValidationError' && err.errors) {
+        const errors = {};
+        Object.keys(err.errors).forEach(key => {
+            errors[key] = { message: err.errors[key].message };
+        });
+        return res.status(400).json({ errors });
+    }
+    return res.status(400).json({ errors: { form: { message: err.message || 'Request failed.' } } });
+}
 
 // creates a User
 module.exports.register = (req, res) => {
+    const userName = req.body.userName && String(req.body.userName).trim();
+    const email = req.body.email && String(req.body.email).trim();
+    if (!userName || !email || !req.body.password) {
+        const errors = {};
+        if (!userName) errors.userName = { message: '*Username is required!' };
+        if (!email) errors.email = { message: '*Email is required!' };
+        if (!req.body.password) errors.password = { message: '*Password is required!' };
+        return res.status(400).json({ errors });
+    }
     // verifies that no current User exists with submitted userName
-    User.findOne({ userNameLower: req.body.userName.toLowerCase() })
+    User.findOne({ userNameLower: userName.toLowerCase() })
         .then(user1 => {
             if (user1 == null) {
                 // verifies that no current User exists with submitted email
-                User.findOne({ emailLower: req.body.email.toLowerCase() })
+                User.findOne({ emailLower: email.toLowerCase() })
                     .then(user2 => {
                         if (user2 == null) {
                             // verifies that submitted password and passwordConf match
                             if (req.body.password === req.body.passwordConf) {
-                                User.create(req.body)
+                                const newUser = new User({ userName, email, password: req.body.password });
+                                newUser.passwordConf = req.body.passwordConf;
+                                newUser.save()
                                     .then(userNew => {
                                         res
                                             .cookie(
@@ -40,7 +61,7 @@ module.exports.register = (req, res) => {
                                                 }
                                             });
                                     })
-                                    .catch(err => res.status(400).json(err));
+                                    .catch(err => toValidationStyle(err, res));
                             } else {
                                 res.cookie();
                                 res.status(400).json({
@@ -62,7 +83,7 @@ module.exports.register = (req, res) => {
                             });
                         }
                     })
-                    .catch(err => res.status(400).json(err));
+                    .catch(err => toValidationStyle(err, res));
             } else {
                 res.cookie();
                 res.status(400).json({
@@ -74,7 +95,7 @@ module.exports.register = (req, res) => {
                 });
             }
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => toValidationStyle(err, res));
 };
 
 
@@ -130,7 +151,7 @@ module.exports.updateUser = (req, res) => {
                                                 }
                                             })
                                         })
-                                        .catch(err => res.status(400).json(err));
+                                        .catch(err => toValidationStyle(err, res));
                                 })
                                 .catch(err => res.status(401).json(err));
                         } else {

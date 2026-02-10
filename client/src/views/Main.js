@@ -79,6 +79,8 @@ const Main = props => {
                                     <i>
                                         Language is art! 
                                     </i>
+                                    <br />
+                                    <br />
                                     Query a word, phrase, suffix, prefix or colloquialism above to get started!
                                 </strong>
                             </p>

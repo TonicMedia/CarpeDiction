@@ -53,7 +53,7 @@ const Login = props => {
 
     // API post function; to be passed down to the LoginForm
     const loginUser = user => {
-        axios.post(`${envUrl}/api/login/`, user, { withCredentials: true })
+        axios.post(`${envUrl}/api/login`, user, { withCredentials: true })
             .then(res => {
                 if (res.data.user) {
                     setLogged(res.data.user);

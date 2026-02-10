@@ -55,11 +55,11 @@ const Register = props => {
 
     // API post function; to be passed down to the RegForm
     const createUser = user => {
-        axios.post(`${envUrl}/api/register/`, user, { withCredentials: true })
+        setErrors([]);
+        axios.post(`${envUrl}/api/register`, user, { withCredentials: true })
             .then(res => {
                 if (res.data.user) {
                     setLogged(res.data.user);
-                    // alert("* Please note that your account will remain logged in on this web browser until you manually log out!");
                     navigate("/");
                 } else {
                     setErrors(res.data);
@@ -69,7 +69,11 @@ const Register = props => {
                 const errorResponse = err.response?.data?.errors || {};
                 const errorArr = [];
                 for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message);
+                    const msg = errorResponse[key];
+                    errorArr.push(typeof msg === 'string' ? msg : (msg?.message || 'Registration failed.'));
+                }
+                if (errorArr.length === 0 && err.response?.status === 400) {
+                    errorArr.push('Registration failed. Please check your entries.');
                 }
                 setErrors(errorArr);
             });

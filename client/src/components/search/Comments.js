@@ -90,7 +90,7 @@ const Comments = props => {
 
     // posts a comment
     const postComment = comment => {
-        axios.post(`${envUrl}/api/comments/post/`, comment, { withCredentials: true })
+        axios.post(`${envUrl}/api/comments/post`, comment, { withCredentials: true })
             .then(res => {
                 setErrors([]);
                 window.location.reload(false);

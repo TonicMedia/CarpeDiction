@@ -95,7 +95,7 @@ const UserForm = props => {
                             )}
                             {formFunc === "Register" && (
                                 <>
-                                    + Sign Up! +
+                                    Sign Up!
                                 </>
                             )}
                         </strong>
@@ -155,16 +155,15 @@ const UserForm = props => {
                                 onChange={handleInputChange}
                             />
                             <Typography
+                                component="div"
                                 className="rIPurple mgSmFont"
                                 variant="body2"
                             >
-                                <Container>
-                                    <strong>
-                                        <i>
-                                            &ensp;* Username will display on all comments
-                                        </i>
-                                    </strong>
-                                </Container>
+                                <strong>
+                                    <i>
+                                        &ensp;* Username will display on all comments
+                                    </i>
+                                </strong>
                             </Typography>
                         </Grid>
                         <Grid
@@ -184,16 +183,15 @@ const UserForm = props => {
                                 onChange={handleInputChange}
                             />
                             <Typography
+                                component="div"
                                 className="rIPurple mgSmFont"
                                 variant="body2"
                             >
-                                <Container>
-                                    <strong>
-                                        <i>
-                                            &ensp;* Email is for verification purposes only
-                                        </i>
-                                    </strong>
-                                </Container>
+                                <strong>
+                                    <i>
+                                        &ensp;* Email is for verification purposes only
+                                    </i>
+                                </strong>
                             </Typography>
                         </Grid>
                         <Grid
@@ -213,16 +211,15 @@ const UserForm = props => {
                                 onChange={handleInputChange}
                             />
                             <Typography
+                                component="div"
                                 className="rIPurple mgSmFont"
                                 variant="body2"
                             >
-                                <Container>
-                                    <strong>
-                                        <i>
-                                            &ensp;* Password must contain 8 or more characters with no spaces
-                                        </i>
-                                    </strong>
-                                </Container>
+                                <strong>
+                                    <i>
+                                        &ensp;* Password must contain 8 or more characters with no spaces
+                                    </i>
+                                </strong>
                             </Typography>
                         </Grid>
                         <Grid
@@ -242,16 +239,15 @@ const UserForm = props => {
                                 onChange={handleInputChange}
                             />
                             <Typography
+                                component="div"
                                 className="rIOrange mgSmFont text-danger"
                                 variant="body2"
                             >
-                                <Container>
-                                    <strong>
-                                        <i>
-                                            &ensp;* Password can NOT be recovered!
-                                        </i>
-                                    </strong>
-                                </Container>
+                                <strong>
+                                    <i>
+                                        &ensp;* Password can NOT be recovered!
+                                    </i>
+                                </strong>
                             </Typography>
                         </Grid>
                     </Grid>
