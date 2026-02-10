@@ -12,24 +12,10 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { encodeSearchQuery } from '../../utils/searchUtils';
+import { searchAccordionStyles } from './searchAccordionStyles';
 
-
-// defines style rulesets for Material UI components
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-}));
+const useStyles = makeStyles((theme) => searchAccordionStyles(theme));
 
 
 // WordsApiFreq retrieves and displays frequency data results from Words API
@@ -47,19 +33,17 @@ const WordsApiFreq = props => {
     const [error, setError] = useState("");
 
 
-    // retrieves the query results and saves them
     useEffect(() => {
-        // set the options for the query request through rapidAPI
+        const controller = new AbortController();
         const options = {
             method: 'GET',
-            url: `https://wordsapiv1.p.rapidapi.com/words/${query}/frequency`,
+            url: `https://wordsapiv1.p.rapidapi.com/words/${encodeSearchQuery(query)}/frequency`,
             headers: {
                 'x-rapidapi-key': process.env.REACT_APP_X_RAPIDAPI_KEY,
                 'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
-            }
+            },
+            signal: controller.signal,
         };
-
-        // makes the request
         axios.request(options)
             .then(res => {
                 const resEntry = res.data;
@@ -74,11 +58,13 @@ const WordsApiFreq = props => {
                     setLoaded(true);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
+                if (err.name === 'AbortError' || err.code === 'ERR_CANCELED') return;
                 setError(`No results from Words API...`);
                 setEntry(null);
                 setLoaded(false);
             });
+        return () => controller.abort();
     }, [query]);
 
 

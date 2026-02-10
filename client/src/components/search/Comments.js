@@ -7,6 +7,7 @@ const like_icon_purple = process.env.PUBLIC_URL + '/images/like_icon_purple.png'
 const like_icon_orange = process.env.PUBLIC_URL + '/images/like_icon_orange.png';
 
 import DeleteButton from '../user/DeleteButton';
+import { encodeSearchQuery } from '../../utils/searchUtils';
 
 import { Button } from 'react-bootstrap';
 
@@ -65,7 +66,7 @@ const Comments = props => {
     // retrieves all comments
     useEffect(() => {
         const controller = new AbortController();
-        axios.get(`${envUrl}/api/comments/retrieve/${query.replace(/\//g, '%2F')}`, {
+        axios.get(`${envUrl}/api/comments/retrieve/${encodeSearchQuery(query)}`, {
             signal: controller.signal,
         })
             .then(res => {
@@ -83,7 +84,7 @@ const Comments = props => {
     // retrieves the top comments
     useEffect(() => {
         const controller = new AbortController();
-        axios.get(`${envUrl}/api/comments/tops/${query.replace(/\//g, '%2F')}`, {
+        axios.get(`${envUrl}/api/comments/tops/${encodeSearchQuery(query)}`, {
             signal: controller.signal,
         })
             .then(res => {

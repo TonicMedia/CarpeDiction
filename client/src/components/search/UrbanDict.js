@@ -11,27 +11,12 @@ import Grid from '@material-ui/core/Grid/';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { encodeSearchQuery } from '../../utils/searchUtils';
+import { searchAccordionStyles } from './searchAccordionStyles';
 
-
-// defines style rulesets for Material UI components
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-        wordBreak: 'break-all',
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    divider: {
-        margin: "30px 0",
-    },
+    ...searchAccordionStyles(theme),
+    divider: { margin: "30px 0" },
 }));
 
 
@@ -50,20 +35,18 @@ const UrbanDict = props => {
     const [error, setError] = useState("");
 
 
-    // retrieves the query results and saves them
     useEffect(() => {
-        // set the options for the query request through rapidAPI
+        const controller = new AbortController();
         const options = {
             method: 'GET',
             url: 'https://mashape-community-urban-dictionary.p.rapidapi.com/define',
-            params: { term: query.replace(/\//g, '%2F') },
+            params: { term: encodeSearchQuery(query) },
             headers: {
                 'x-rapidapi-key': process.env.REACT_APP_X_RAPIDAPI_KEY,
                 'x-rapidapi-host': 'mashape-community-urban-dictionary.p.rapidapi.com'
-            }
+            },
+            signal: controller.signal,
         };
-
-        // makes the request
         axios.request(options)
             .then(res => {
                 // generates an array of the entries found by the search
@@ -106,11 +89,13 @@ const UrbanDict = props => {
                     setLoaded(true);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
+                if (err.name === 'AbortError' || err.code === 'ERR_CANCELED') return;
                 setError(`No results from Urban Dictionary API...`);
                 setEntries(null);
                 setLoaded(false);
             });
+        return () => controller.abort();
     }, [query]);
 
 

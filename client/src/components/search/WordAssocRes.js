@@ -11,24 +11,10 @@ import Grid from '@material-ui/core/Grid/';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { encodeSearchQuery } from '../../utils/searchUtils';
+import { searchAccordionStyles } from './searchAccordionStyles';
 
-
-// defines style rulesets for Material UI components
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-}));
+const useStyles = makeStyles((theme) => searchAccordionStyles(theme));
 
 
 // WordAssocRes retrieves and displays a list of related words from Word Associations API 
@@ -47,20 +33,18 @@ const WordAssocRes = props => {
     const [error, setError] = useState("");
 
 
-    // retrieves the query results and saves them
     useEffect(() => {
-        // set the options for the query request through rapidAPI
+        const controller = new AbortController();
         const options = {
             method: 'GET',
             url: 'https://twinword-word-associations-v1.p.rapidapi.com/associations/',
-            params: { entry: query },
+            params: { entry: encodeSearchQuery(query) },
             headers: {
                 'x-rapidapi-key': process.env.REACT_APP_X_RAPIDAPI_KEY,
                 'x-rapidapi-host': 'twinword-word-associations-v1.p.rapidapi.com'
-            }
+            },
+            signal: controller.signal,
         };
-
-        // makes the request
         axios.request(options)
             .then(res => {
                 const resEntry = res.data;
@@ -89,19 +73,18 @@ const WordAssocRes = props => {
                     setLoaded(true);
                 }
             })
-            .catch(err => {
-                if (err && err.response && err.response.status === 503) {
-                    setError(`Word Associations API is temporarily unavailable...`)
-                    setEntry(null);
-                    setWords(null);
-                    setLoaded(false);
+            .catch((err) => {
+                if (err.name === 'AbortError' || err.code === 'ERR_CANCELED') return;
+                if (err?.response?.status === 503) {
+                    setError(`Word Associations API is temporarily unavailable...`);
                 } else {
                     setError(`No results from Word Associations API...`);
-                    setEntry(null);
-                    setWords(null);
-                    setLoaded(false);
                 }
+                setEntry(null);
+                setWords(null);
+                setLoaded(false);
             });
+        return () => controller.abort();
     }, [query]);
 
 

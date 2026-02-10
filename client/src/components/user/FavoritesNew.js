@@ -55,7 +55,7 @@ const FavoritesNew = props => {
                             <i>
                                 <u>
                                     {user.userName}
-                                    's Favorite Queries (Recent)
+                                    's Favorite Queries (Most Recent)
                                 </u>
                             </i>
                         </strong>

@@ -127,7 +127,7 @@ const ImportExportFavs = props => {
                 <h2 className="qQuotes resHeading mb-sm-3">
                     <strong>
                         <i>
-                            * Import Favorites! *
+                            Import Favorites!
                         </i>
                     </strong>
                 </h2>
@@ -184,7 +184,7 @@ const ImportExportFavs = props => {
                 <h2 className="qQuotes resHeading mb-sm-3">
                     <strong>
                         <i>
-                            * Export Favorites! *
+                            Export Favorites!
                         </i>
                     </strong>
                 </h2>

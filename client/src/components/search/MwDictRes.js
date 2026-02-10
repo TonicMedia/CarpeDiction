@@ -11,27 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import { encodeSearchQuery } from '../../utils/searchUtils';
+import { searchAccordionStyles } from './searchAccordionStyles';
 
-
-// defines style rulesets for Material UI components
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-        wordBreak: 'break-all',
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    divider: {
-        margin: "30px 0",
-    },
+    ...searchAccordionStyles(theme),
+    divider: { margin: "30px 0" },
 }));
 
 
@@ -63,9 +48,10 @@ const MwDictRes = props => {
     const [error, setError] = useState("");
 
 
-    // retrieves the query results and saves them
     useEffect(() => {
-        axios.get('https://dictionaryapi.com/api/v3/references/collegiate/json/' + query.replace(/\//g, '%2F') + '?key=' + process.env.REACT_APP_MW_DICT_KEY)
+        const controller = new AbortController();
+        const encQuery = encodeSearchQuery(query);
+        axios.get(`https://dictionaryapi.com/api/v3/references/collegiate/json/${encQuery}?key=${process.env.REACT_APP_MW_DICT_KEY}`, { signal: controller.signal })
             .then(res => {
                 // generates an array of the entries found by the search or an array of spellcheck suggestion if no entries found
                 const resEntries = [];
@@ -172,11 +158,13 @@ const MwDictRes = props => {
                     setLoaded(true);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
+                if (err.name === 'AbortError' || err.code === 'ERR_CANCELED') return;
                 setError(`No results from the Merriam-Webster Dictionary...`);
                 setEntries(null);
                 setLoaded(false);
             });
+        return () => controller.abort();
     }, [query, setAudioLoaded, setHeadWords, setIsOffensive, setMp3s, setNotOffensive, setPronunciations, setSpellings, setWavs]);
 
 
