@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 // defines style rulesets for Material UI components
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((_theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -95,7 +95,9 @@ const Register = props => {
                         const summary = errorArr.length ? errorArr.join(' · ') : err.response?.data?.message || err.message;
                         console.warn(`[register] ${status} ${err.config?.url ?? ''} → ${summary}`);
                     }
-                } catch (_) {}
+                } catch (_) {
+                    // Swallow logging errors to avoid breaking user-facing flow
+                }
                 setErrors(errorArr);
             });
     };

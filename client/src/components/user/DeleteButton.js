@@ -22,7 +22,7 @@ const DeleteButton = props => {
     // function to handle logouts
     const handleLogout = () => {
         axios.get(`${envUrl}/api/logout`, { withCredentials: true })
-            .then(res => {
+            .then(_res => {
                 setLogged(null);
                 navigate('/');
             })
@@ -34,9 +34,9 @@ const DeleteButton = props => {
 
 
     // deletes the User
-    const deleteUser = e => {
+    const deleteUser = _e => {
         axios.delete(`${envUrl}/api/users/${logged._id}`, { withCredentials: true })
-            .then(res => {
+            .then(_res => {
                 handleLogout();
                 successCallback();
             })
@@ -47,9 +47,9 @@ const DeleteButton = props => {
     };
 
     // deletes the Comment
-    const deleteComment = e => {
+    const deleteComment = _e => {
         axios.delete(`${envUrl}/api/comments/delete/${comment._id}`, { withCredentials: true })
-            .then(res => {
+            .then(_res => {
                 window.location.reload(false);
             })
             .catch(err => {

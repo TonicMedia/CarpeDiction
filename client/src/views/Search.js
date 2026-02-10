@@ -108,7 +108,7 @@ const Search = props => {
                 }
                 setLoaded(true);
             })
-            .catch(err => {
+            .catch(_err => {
                 setLoaded(false);
             });
     }, [query, encQuery, logged, setAudioLoaded])

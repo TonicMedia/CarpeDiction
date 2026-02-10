@@ -5,7 +5,7 @@ import { navigate } from '@reach/router';
 
 
 // redirects to home page for all unhandled URLs
-const NotFound = props => {
+const NotFound = _props => {
 
     // redirects to home
     useEffect(() => {

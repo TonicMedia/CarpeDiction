@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 // defines style rulesets for Material UI components
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((_theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',

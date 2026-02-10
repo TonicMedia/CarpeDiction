@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const carpe_diction = process.env.PUBLIC_URL + '/images/carpe_diction.png';
 
-import FoundersNote from '../components/main/FoundersNote';
-import Links from '../components/main/Links';
 import NavBar from '../components/common/NavBar';
 import StickyFooter from '../components/common/StickyFooter';
-import TipJars from '../components/main/TipJars';
 import WotdCard from '../components/main/WotdCard';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Divider } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -81,8 +77,7 @@ const Main = props => {
                                     </i>
                                 </strong>
                             </p>
-                            <br />
-                            <br />
+                            <WotdCard envUrl={envUrl} />
                             <p className="cdTagLine">
                                 <strong>
                                     Query a word, phrase, suffix, prefix or colloquialism above to get started!

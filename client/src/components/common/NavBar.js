@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Link, navigate } from '@reach/router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-const ri_icon = process.env.PUBLIC_URL + '/images/ri_icon.png';
 const carpe_diction = process.env.PUBLIC_URL + '/images/carpe_diction.png';
 
 import { Button } from 'react-bootstrap';
@@ -14,7 +13,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 
 
 
@@ -57,10 +55,10 @@ const NavBar = props => {
         navigate('/');
 
         axios.get(`${envUrl}/api/logout`, { withCredentials: true })
-            .then(res => {
+            .then(_res => {
                 setLogged(null);
             })
-            .catch(err => {
+            .catch(_err => {
                 setLogged(null);
             });
     };

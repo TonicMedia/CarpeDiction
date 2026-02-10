@@ -1,1 +1,24 @@
-{"name":"carpe-diction","version":"1.0.0","private":true,"description":"CarpeDiction – lexical APIs compendium with favorites, comments, and user features","scripts":{"start":"cd server && yarn start","server":"cd server && yarn start","client":"cross-env NODE_OPTIONS=--no-deprecation cd client && yarn start","dev":"concurrently \"yarn server\" \"yarn client\"","clientinstall":"cd client && yarn install","render-postbuild":"cd client && NODE_OPTIONS=--no-deprecation yarn install && yarn build"},"devDependencies":{"concurrently":"^8.2.2","cross-env":"^7.0.3"},"engines":{"node":">=14.0.0"}}
+{
+  "name": "carpe-diction",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CarpeDiction \u2013 lexical APIs compendium with favorites, comments, and user features",
+  "scripts": {
+    "start": "cd server && yarn start",
+    "server": "cd server && yarn start",
+    "client": "cross-env NODE_OPTIONS=--no-deprecation cd client && yarn start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "clientinstall": "cd client && yarn install",
+    "render-postbuild": "cd client && NODE_OPTIONS=--no-deprecation yarn install && yarn build",
+    "lint:client": "cd client && yarn lint",
+    "lint:server": "cd server && yarn lint",
+    "lint": "yarn lint:server && yarn lint:client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

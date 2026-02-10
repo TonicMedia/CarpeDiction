@@ -127,7 +127,7 @@ const MwDictRes = props => {
                         subDirectory = "bix";
                     } else if (newAudioEntries[i].hwi.prs[0].sound.audio.toString().slice(0, 2) === "gg") {
                         subDirectory = "gg";
-                    } else if (!!newAudioEntries[i].hwi.prs[0].sound.audio.toString()[0].match(/^[`~@#$%^&*()_=+/-[\]{}\\|.,:;!?'"<>123456789]/)) {
+                    } else if (newAudioEntries[i].hwi.prs[0].sound.audio.toString()[0].match(/^[`~@#$%^&*()_=+/-[\]{}\\|.,:;!?'"<>123456789]/)) {
                         subDirectory = "number";
                     } else {
                         subDirectory = newAudioEntries[i].hwi.prs[0].sound.audio.toString()[0];

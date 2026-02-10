@@ -21,7 +21,7 @@ import Typography from '@material-ui/core/Typography';
 
 
 // defines style rulesets for Material UI components
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((_theme) => ({
     root: {
         margin: 'auto',
         marginBottom: '1rem',
@@ -102,7 +102,7 @@ const Comments = props => {
     // posts a comment
     const postComment = comment => {
         axios.post(`${envUrl}/api/comments/post`, comment, { withCredentials: true })
-            .then(res => {
+            .then(_res => {
                 setErrors([]);
                 window.location.reload(false);
             })
@@ -121,7 +121,7 @@ const Comments = props => {
     // updates comments when liked
     const likeComment = comment => {
         axios.put(`${envUrl}/api/comments/like/`, comment, { withCredentials: true })
-            .then(res => {
+            .then(_res => {
                 setErrors([]);
             })
             .catch(err => {
