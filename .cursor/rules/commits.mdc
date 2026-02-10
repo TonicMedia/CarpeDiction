@@ -1,0 +1,8 @@
+---
+description: Commit message conventions
+alwaysApply: true
+---
+
+# Commits
+
+- **Never mention Cursor** (or the IDE/tool name) in commit messages. Use neutral, descriptive messages only (e.g. "Add WOTD scrape on startup", not "Cursor: add...").

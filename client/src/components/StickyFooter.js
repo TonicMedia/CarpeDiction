@@ -36,7 +36,7 @@ const StickyFooter = () => {
                     xs={6}
                 >
                     <Link
-                        href="http://github.com/TonicMedia/CarpeDiction"
+                        href="http://github.com/TheTonicStudios/CarpeDiction"
                         target="_blank"
                     >
                         <img
@@ -48,7 +48,7 @@ const StickyFooter = () => {
                         />
                     </Link>
                     <Link
-                        href="http://www.linkedin.com/in/TonicMedia"
+                        href="http://www.linkedin.com/in/TheTonicStudios"
                         target="_blank"
                     >
                         <img
