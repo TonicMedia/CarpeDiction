@@ -26,11 +26,18 @@ const express = require('express'),
 
 // configuers and registers middleware
 app.use(cookieParser());
-if (process.env.NODE_ENV === 'production') {
-    app.use(cors({ credentials: true, origin: 'https://www.carpediction.com' }));
-} else {
-    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
-}
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://www.carpediction.com',
+    'https://carpediction-server-and-client.onrender.com',
+];
+app.use(cors({
+    credentials: true,
+    origin: (origin, cb) => {
+        if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+        cb(null, false);
+    },
+}));
 console.log(`Server Type: ${process.env.NODE_ENV}`)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
