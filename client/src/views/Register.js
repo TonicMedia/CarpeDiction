@@ -80,7 +80,9 @@ const Register = props => {
                     errorArr.push(typeof msg === 'string' ? msg : (msg?.message || 'Registration failed.'));
                 }
                 if (errorArr.length === 0) {
-                    if (err.response?.status === 503) {
+                    if (!err.response) {
+                        errorArr.push('Cannot reach the server. Make sure the backend is running (e.g. yarn server or yarn dev).');
+                    } else if (err.response?.status === 503) {
                         errorArr.push('Service temporarily unavailable. Please try again in a moment.');
                     } else {
                         errorArr.push('Registration failed. Please check your entries.');
