@@ -89,7 +89,13 @@ if (process.env.NODE_ENV === 'production') {
 // Start listening only after DB is connected (avoids "buffering timed out" on register/login)
 dbReady
     .then(() => {
-        app.listen(port, () => console.log(`Listening on port ${port}`));
+        const server = app.listen(port, () => {
+            const addr = server.address();
+            const bound = addr ? `${addr.address}:${addr.port}` : `port ${port}`;
+            console.log(`Listening on ${bound}`);
+            const url = process.env.API_ROOT || (addr && (addr.address === '0.0.0.0' || addr.address === '::') ? `http://localhost:${addr.port}` : `http://${bound}`);
+            console.log(`URL: ${url}`);
+        });
     })
     .catch(() => {
         console.error("Server not started: database connection failed.");
