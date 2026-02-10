@@ -79,8 +79,12 @@ const Register = props => {
                     const msg = errorResponse[key];
                     errorArr.push(typeof msg === 'string' ? msg : (msg?.message || 'Registration failed.'));
                 }
-                if (errorArr.length === 0 && err.response?.status === 400) {
-                    errorArr.push('Registration failed. Please check your entries.');
+                if (errorArr.length === 0) {
+                    if (err.response?.status === 503) {
+                        errorArr.push('Service temporarily unavailable. Please try again in a moment.');
+                    } else {
+                        errorArr.push('Registration failed. Please check your entries.');
+                    }
                 }
                 setErrors(errorArr);
             });

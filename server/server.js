@@ -13,7 +13,7 @@ const path = require('path');
 
 // configures dotenv and mongoose
 require('dotenv').config();
-require('./config/mongoose.config');
+const { dbReady } = require('./config/mongoose.config');
 
 
 // configures and initializes an express server
@@ -86,7 +86,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-const server = app.listen(port, () => console.log(`Listening on port ${port}`));
+// Start listening only after DB is connected (avoids "buffering timed out" on register/login)
+dbReady
+    .then(() => {
+        app.listen(port, () => console.log(`Listening on port ${port}`));
+    })
+    .catch(() => {
+        console.error("Server not started: database connection failed.");
+        process.exit(1);
+    });
 
 
 // scrapes a random WOTD every 24 hours and saves it to the db

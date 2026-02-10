@@ -3,6 +3,17 @@ const User = require("../models/user.model"),
     bcrypt = require('bcrypt'),
     jwt = require('jsonwebtoken');
 
+// user-friendly message when DB is unreachable (buffering timeout, network, etc.)
+const DB_UNAVAILABLE_MSG = 'Database is temporarily unavailable. Please try again in a moment.';
+
+function isDbConnectionError(err) {
+    const msg = err && err.message ? String(err.message) : '';
+    return msg.includes('buffering timed out') ||
+        msg.includes('MongoNetworkError') ||
+        msg.includes('MongoServerSelectionError') ||
+        msg.includes('connection timed out');
+}
+
 // normalize Mongoose validation (and similar) errors to { errors: { field: { message } } } for client
 function toValidationStyle(err, res) {
     if (err.name === 'ValidationError' && err.errors) {
@@ -11,6 +22,9 @@ function toValidationStyle(err, res) {
             errors[key] = { message: err.errors[key].message };
         });
         return res.status(400).json({ errors });
+    }
+    if (isDbConnectionError(err)) {
+        return res.status(503).json({ errors: { form: { message: DB_UNAVAILABLE_MSG } } });
     }
     return res.status(400).json({ errors: { form: { message: err.message || 'Request failed.' } } });
 }

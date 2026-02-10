@@ -27,9 +27,10 @@ const uri = encodeMongoUri(rawUri) || "mongodb://localhost:27017/carpediction";
 
 // configures the Mongoose connection to the MongoDB
 mongoose.set('strictQuery', true);
-mongoose.connect(uri, {
+const connectPromise = mongoose.connect(uri, {
     serverSelectionTimeoutMS: 15000,
-})
+});
+connectPromise
     .then(() => console.log("Established a connection to the database"))
     .catch(err => {
         console.error("Something went wrong when connecting to the database:", err.message);
@@ -42,3 +43,6 @@ mongoose.connect(uri, {
             console.error("Also check: Atlas → Network Access allows your IP (or 0.0.0.0/0 for dev).");
         }
     });
+
+/** Resolves when DB is connected. Server should await this before listening. */
+module.exports.dbReady = connectPromise;
