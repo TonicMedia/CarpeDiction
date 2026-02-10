@@ -78,7 +78,7 @@ module.exports.likeComment = (req, res) => {
 };
 
 
-// deletes the comment via it's ID
+// deletes the comment by ID
 module.exports.deleteComment = (req, res) => {
     Comment.deleteOne({ _id: req.params.id })
         .then(deleteConfirmation => res.json(deleteConfirmation))

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const gh_icon = process.env.PUBLIC_URL + '/images/github_icon_square_orange.png';
-const ig_icon = process.env.PUBLIC_URL + '/images/ig_icon_square_orange.png';
 const li_icon = process.env.PUBLIC_URL + '/images/linkedin_icon_square_orange.png';
 
 import Copyright from './Copyright'

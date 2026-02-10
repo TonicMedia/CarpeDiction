@@ -3,7 +3,7 @@ const CommentController = require('../controllers/comment.controller'),
 
 
 
-// API routes to handle user CRUD
+// API routes for comments
 module.exports = function (app) {
     app.get('/api/comments/retrieve/:query', CommentController.retrieve);
     app.get('/api/comments/tops/:query', CommentController.getTops);

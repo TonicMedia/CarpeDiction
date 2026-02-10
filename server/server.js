@@ -24,7 +24,7 @@ const express = require('express'),
     port = process.env.PORT;
 
 
-// configuers and registers middleware
+// configures and registers middleware
 app.use(cookieParser());
 const allowedOrigins = [
     'http://localhost:3000',

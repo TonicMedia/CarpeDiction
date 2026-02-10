@@ -2,7 +2,7 @@ const WotdController = require('../controllers/wotd.controller');
 
 
 
-// API routes to handle user CRUD
+// API routes for WOTD
 module.exports = function (app) {
     app.post('/api/wotd/add', WotdController.add);
     app.get('/api/wotd/latest', WotdController.latest);
