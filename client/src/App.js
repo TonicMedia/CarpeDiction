@@ -19,10 +19,17 @@ import Update from './views/Update';
 // React client routing setup
 function App() {
 
-    // API base URL: use NODE_ENV (set to 'production' by CRA at build time) so production build uses REACT_APP_API_ROOT
-    const envUrl = process.env.NODE_ENV === 'production'
-        ? (process.env.REACT_APP_API_ROOT || (typeof window !== 'undefined' ? window.location.origin : ''))
-        : 'http://localhost:8000';
+    // API base URL: production uses REACT_APP_API_ROOT or same origin. Avoid mixed content: if page is HTTPS, use HTTPS for API.
+    const envUrl = (() => {
+        if (process.env.NODE_ENV !== 'production') return 'http://localhost:8000';
+        const origin = typeof window !== 'undefined' ? window.location.origin : '';
+        const configured = process.env.REACT_APP_API_ROOT || origin;
+        // If page is HTTPS but configured URL is HTTP, use same origin (fixes mixed content when env var is wrong)
+        if (typeof window !== 'undefined' && window.location.protocol === 'https:' && configured.startsWith('http:')) {
+            return origin;
+        }
+        return configured || origin;
+    })();
 
     // state variable to hold logged in User
     const [logged, setLogged] = useState(
