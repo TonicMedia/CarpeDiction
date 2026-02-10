@@ -25,6 +25,8 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     port = process.env.PORT;
 
+// Trust first proxy so req.ip reflects X-Forwarded-For (client IP) when behind a load balancer
+app.set('trust proxy', 1);
 
 // configures and registers middleware
 app.use(cookieParser());
@@ -68,7 +70,12 @@ app.use((req, res, next) => {
         const ms = Date.now() - start;
         const pathSafe = safePath(req.originalUrl || req.url);
         const ip = req.ip || req.socket?.remoteAddress || '-';
-        console.log(`[${new Date().toISOString()}] ${req.method} ${pathSafe} ${res.statusCode} ${ms}ms ${ip}`);
+        const forwarded = req.get('x-forwarded-for');
+        const referer = req.get('referer') || req.get('referrer') || '-';
+        const ua = req.get('user-agent');
+        const uaShort = ua ? (ua.length > 80 ? ua.slice(0, 77) + '...' : ua) : '-';
+        const from = forwarded ? `forwarded=${forwarded} ip=${ip}` : `ip=${ip}`;
+        console.log(`[${new Date().toISOString()}] ${req.method} ${pathSafe} ${res.statusCode} ${ms}ms ${from} referer=${referer} ua=${uaShort}`);
         const p = (req.originalUrl || req.url).split('?')[0];
         if (req.method === 'GET' && (p.startsWith('/api/comments/retrieve/') || p.startsWith('/api/comments/tops/'))) {
             const query = decodeURIComponent(p.replace(/^\/api\/comments\/(?:retrieve|tops)\//, '') || '').trim();
