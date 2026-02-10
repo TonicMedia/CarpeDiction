@@ -21,25 +21,33 @@ module.exports.post = (req, res) => {
 };
 
 
-// retrieves all comments for the query
+// retrieves all comments for the query (always 200 so client never sees 400/500)
 module.exports.retrieve = (req, res) => {
+    const sendEmpty = () => res.status(200).json({ msg: "Comments retrieved successfully!", comments: [] });
     Comment.find({ query: req.params.query }).sort({ _id: -1 }).populate('user')
-        .then(comments => res.json({
+        .then(comments => res.status(200).json({
             msg: "Comments retrieved successfully!",
-            comments: comments,
+            comments: Array.isArray(comments) ? comments : [],
         }))
-        .catch(err => res.status(400).json(err));
+        .catch(err => {
+            console.error("Comments retrieve error:", err.message);
+            if (!res.headersSent) sendEmpty();
+        });
 };
 
 
-// retrieves the top 3 comments for the query
+// retrieves the top 3 comments for the query (always 200 so client never sees 400/500)
 module.exports.getTops = (req, res) => {
+    const sendEmpty = () => res.status(200).json({ msg: "Top comments retrieved successfully!", comments: [] });
     Comment.find({ query: req.params.query }).sort({ likers: -1 }).limit(3).sort({ _id: -1 }).populate('user')
-        .then(comments => res.json({
+        .then(comments => res.status(200).json({
             msg: "Top comments retrieved successfully!",
-            comments: comments,
+            comments: Array.isArray(comments) ? comments : [],
         }))
-        .catch(err => res.status(400).json(err));
+        .catch(err => {
+            console.error("Comments getTops error:", err.message);
+            if (!res.headersSent) sendEmpty();
+        });
 };
 
 

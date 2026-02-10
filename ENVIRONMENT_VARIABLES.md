@@ -47,8 +47,6 @@ These variables are used in the `client/` directory. React requires environment 
   - `client/src/components/search/WordsApiFreq.js` (line 57)
   - `client/src/components/search/UrbanDict.js` (line 61)
   - `client/src/components/search/WordAssocRes.js` (line 58)
-  - `client/src/components/search/LinguaConj.js` (line 57)
-  - `client/src/components/search/DeepTrans.js` (lines 57, 82, 106, 130, 154)
 - **Description**: API key for RapidAPI services (used for rhymes, frequency, urban dictionary, word associations, conjugation, and translation services)
 
 ### 2. `REACT_APP_MW_THES_KEY`

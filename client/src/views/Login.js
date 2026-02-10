@@ -64,10 +64,10 @@ const Login = props => {
                 }
             })
             .catch(err => {
-                const errorResponse = err.response.data.errors;
+                const errorResponse = err.response?.data?.errors || {};
                 const errorArr = [];
                 for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message)
+                    errorArr.push(errorResponse[key].message);
                 }
                 setErrors(errorArr);
             });

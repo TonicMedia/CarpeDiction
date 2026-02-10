@@ -29,27 +29,29 @@ module.exports.add = (req, res) => {
 };
 
 
-// retrieves newest WOTD
+// retrieves newest WOTD (always 200 so client never sees 400/500)
 module.exports.latest = (req, res) => {
     Wotd.findOne({}).sort({ _id: -1 }).limit(1)
-        .then(wotd => res.json({
+        .then(wotd => res.status(200).json({
             msg: "WOTD retrieved successfully!",
-            Wotd: {
-                _id: wotd._id,
-                word: wotd.word,
-                def: wotd.def,
-            }
+            Wotd: wotd ? { _id: wotd._id, word: wotd.word, def: wotd.def } : { _id: null, word: "", def: "" },
         }))
-        .catch(err => res.status(400).json(err));
+        .catch(err => {
+            console.error("WOTD latest error:", err.message);
+            if (!res.headersSent) res.status(200).json({ msg: "WOTD unavailable", Wotd: { _id: null, word: "", def: "" } });
+        });
 };
 
 
-// retrieves archive of WOTD
+// retrieves archive of WOTD (always 200 so client never sees 400/500)
 module.exports.archive = (req, res) => {
     Wotd.find({}).sort({ _id: -1 }).limit(31)
-        .then(archive => res.json({
+        .then(archive => res.status(200).json({
             msg: "Archive retrieved successfully!",
-            Archive: archive,
+            Archive: Array.isArray(archive) ? archive : [],
         }))
-        .catch(err => res.status(400).json(err));
+        .catch(err => {
+            console.error("WOTD archive error:", err.message);
+            if (!res.headersSent) res.status(200).json({ msg: "Archive unavailable", Archive: [] });
+        });
 };

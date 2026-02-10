@@ -66,21 +66,27 @@ const Comments = props => {
     useEffect(() => {
         axios.get(`${envUrl}/api/comments/retrieve/${query.replace(/\//g, '%2F')}`)
             .then(res => {
-                const resComments = res.data.comments;
-                setComments(resComments);
+                setComments(res.data.comments ?? []);
+                setAllLoaded(true);
+            })
+            .catch(() => {
+                setComments([]);
                 setAllLoaded(true);
             });
-    }, [query]);
+    }, [envUrl, query]);
 
     // retrieves the top comments
     useEffect(() => {
         axios.get(`${envUrl}/api/comments/tops/${query.replace(/\//g, '%2F')}`)
             .then(res => {
-                const resTopComments = res.data.comments;
-                setTopComments(resTopComments);
+                setTopComments(res.data.comments ?? []);
+                setTopLoaded(true);
+            })
+            .catch(() => {
+                setTopComments([]);
                 setTopLoaded(true);
             });
-    }, [query]);
+    }, [envUrl, query]);
 
     // posts a comment
     const postComment = comment => {
@@ -90,12 +96,12 @@ const Comments = props => {
                 window.location.reload(false);
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
-                const errorResponse = err.response.data.errors;
+                const errorResponse = err.response?.data?.errors || {};
                 const errorArr = [];
                 for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message)
+                    errorArr.push(errorResponse[key].message);
                 }
                 setErrors(errorArr);
             });
@@ -108,7 +114,7 @@ const Comments = props => {
                 setErrors([]);
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
             });
     }

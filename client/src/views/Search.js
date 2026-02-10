@@ -4,9 +4,6 @@ import axios from 'axios';
 import { navigate } from '@reach/router';
 
 import Comments from '../components/search/Comments';
-// disabled for now due to 429 error...retry in a month or so maybe a bad useEffect ran up the limit...
-// import DeepTrans from '../components/Results/DeepTrans';
-import LinguaConj from '../components/search/LinguaConj';
 import MwDictRes from '../components/search/MwDictRes';
 import MwThesRes from '../components/search/MwThesRes';
 import NavBar from '../components/common/NavBar';
@@ -123,7 +120,7 @@ const Search = props => {
                 setLogged(res.data.user);
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
             });
     };
@@ -188,8 +185,6 @@ const Search = props => {
                         <MwThesRes query={decQuery} />
                         <UrbanDict query={decQuery} />
                         <WordsApiRhymes query={decQuery} />
-                        <LinguaConj query={decQuery} />
-                        {/* <DeepTrans query={query} /> */}
                         <WordsApiFreq query={decQuery} />
                         <WordAssocRes query={decQuery} />
                         <br />

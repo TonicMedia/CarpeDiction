@@ -60,7 +60,7 @@ const Update = props => {
                 setLoaded(true);
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
             });
     }, [localUser]);
@@ -73,9 +73,9 @@ const Update = props => {
                 navigate("/user/account");
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
-                if (err.response.data.errors) {
+                if (err.response?.data?.errors) {
                     const errorResponse = err.response.data.errors;
                     const errorArr = [];
                     for (const key of Object.keys(errorResponse)) {

@@ -25,6 +25,10 @@ const DeleteButton = props => {
             .then(res => {
                 setLogged(null);
                 navigate('/');
+            })
+            .catch(() => {
+                setLogged(null);
+                navigate('/');
             });
     };
 
@@ -37,7 +41,7 @@ const DeleteButton = props => {
                 successCallback();
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
             });
     };
@@ -49,7 +53,7 @@ const DeleteButton = props => {
                 window.location.reload(false);
             })
             .catch(err => {
-                if (err.response.status === 401)
+                if (err.response?.status === 401)
                     navigate('/login');
             });
     }

@@ -27,6 +27,34 @@ console.log(`Server Type: ${process.env.NODE_ENV}`)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Safely log all HTTP requests (no auth headers, cookies, or body)
+const SENSITIVE_QUERY_KEYS = ['token', 'key', 'secret', 'password', 'auth', 'cookie'];
+function safePath(url) {
+    if (!url || typeof url !== 'string') return url;
+    const [pathPart, qs] = url.split('?');
+    if (!qs) return pathPart;
+    const params = new URLSearchParams(qs);
+    SENSITIVE_QUERY_KEYS.forEach(k => {
+        if (params.has(k)) params.set(k, '[REDACTED]');
+    });
+    const redacted = params.toString();
+    return redacted ? `${pathPart}?${redacted}` : pathPart;
+}
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on('finish', () => {
+        const ms = Date.now() - start;
+        const pathSafe = safePath(req.originalUrl || req.url);
+        const ip = req.ip || req.socket?.remoteAddress || '-';
+        console.log(`[${new Date().toISOString()}] ${req.method} ${pathSafe} ${res.statusCode} ${ms}ms ${ip}`);
+        const p = (req.originalUrl || req.url).split('?')[0];
+        if (req.method === 'GET' && (p.startsWith('/api/comments/retrieve/') || p.startsWith('/api/comments/tops/'))) {
+            const query = decodeURIComponent(p.replace(/^\/api\/comments\/(?:retrieve|tops)\//, '') || '').trim();
+            if (query) console.log(`  -> Search query: "${query}"`);
+        }
+    });
+    next();
+});
 
 // imports routes to express app
 require('./routes/user.routes')(app);

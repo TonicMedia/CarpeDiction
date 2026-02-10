@@ -46,13 +46,20 @@ const WotdArchive = props => {
 
     // retrieves the WOTD archive
     useEffect(() => {
+        let cancelled = false;
         axios.get(`${envUrl}/api/wotd/archive`)
             .then(res => {
-                const newWords = res.data.Archive;
-                setWords(newWords);
+                if (cancelled) return;
+                setWords(res.data.Archive ?? []);
+                setLoaded(true);
+            })
+            .catch(() => {
+                if (cancelled) return;
+                setWords([]);
                 setLoaded(true);
             });
-    }, []);
+        return () => { cancelled = true; };
+    }, [envUrl]);
 
 
     // returns a material UI accordion component displaying the WOTD archive

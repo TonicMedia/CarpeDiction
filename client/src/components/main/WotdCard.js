@@ -49,16 +49,21 @@ const WotdCard = props => {
 
     // retrieves the WOTD data
     useEffect(() => {
+        let cancelled = false;
         axios.get(`${envUrl}/api/wotd/latest`)
             .then(res => {
-                console.log(res)
-                const newWord = res.data.Wotd.word;
-                // const newDef = res.data.Wotd.def;
+                if (cancelled) return;
+                const newWord = res.data.Wotd?.word ?? "";
                 setWord(newWord);
-                // setDef(newDef);
+                setLoaded(true);
+            })
+            .catch(() => {
+                if (cancelled) return;
+                setWord("");
                 setLoaded(true);
             });
-    }, [])
+        return () => { cancelled = true; };
+    }, [envUrl]);
 
 
     // returns WOTD card with archive accordion
