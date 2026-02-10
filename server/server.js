@@ -126,7 +126,15 @@ function getWotd() {
             console.log(Wotd);
             axios.post(`${process.env.API_ROOT}/api/wotd/add`, Wotd)
                 .then(res => console.log(res.data))
-                .catch(err => console.log(err));
+                .catch(err => {
+                    const alreadyExists = err.response?.status === 400 &&
+                        err.response?.data?.msg === 'WOTD already exists!';
+                    if (alreadyExists) {
+                        console.log(`WOTD "${Wotd.word}" already in DB, skipping.`);
+                    } else {
+                        console.error('WOTD add failed:', err.message, err.response?.data || '');
+                    }
+                });
         })
         .catch(err => console.log(err));
 }
