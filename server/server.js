@@ -118,7 +118,8 @@ function getWotd() {
         .then(res => {
             const html = res.data;
             const $ = cheerio.load(html);
-            Wotd.word = $("h1:first").text().trim();
+            // First h1 is "Word of the Day"; the actual word is in the first h2
+            Wotd.word = $("h2").first().text().trim() || $("h1:first").text().trim();
             Wotd.def = "";
             console.log(Wotd);
             axios.post(`${process.env.API_ROOT}/api/wotd/add`, Wotd)
