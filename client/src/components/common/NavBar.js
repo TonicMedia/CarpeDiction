@@ -88,18 +88,6 @@ const NavBar = props => {
                             className="d-inline-block mr-sm-1"
                             alt="CarpeDiction!"
                         />
-                        <Typography className="d-inline rIOrange ml-sm-1">
-                            <i>
-                                by&nbsp;
-                            </i>
-                        </Typography>
-                        <img
-                            src={ri_icon}
-                            width="25"
-                            height="25"
-                            className="d-inline-block mr-sm-1"
-                            alt="rI : "
-                        />
                     </Link>
                 </Navbar.Brand>
                 <div className="sForm cdNav">
