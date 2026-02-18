@@ -11,7 +11,12 @@ const WotdSchema = new mongoose.Schema({
     def: {
         type: String,
         required: false,
-    }
+    },
+    // date (start-of-day UTC) so we have one WOTD per day and "latest" = most recent date
+    date: {
+        type: Date,
+        required: false,
+    },
 }, { timestamps: true });
 
 

@@ -165,14 +165,17 @@ function getWotd() {
             // First h1 is "Word of the Day"; the actual word is in the first h2
             Wotd.word = $("h2").first().text().trim() || $("h1:first").text().trim();
             Wotd.def = "";
+            // Start of today UTC so add/latest use one WOTD per day
+            const now = new Date();
+            Wotd.date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
             console.log(Wotd);
             axios.post(`${process.env.API_ROOT}/api/wotd/add`, Wotd)
                 .then(res => console.log(res.data))
                 .catch(err => {
                     const alreadyExists = err.response?.status === 400 &&
-                        err.response?.data?.msg === 'WOTD already exists!';
+                        (err.response?.data?.msg === 'WOTD already exists!' || err.response?.data?.msg === 'WOTD for this date already in DB, skipping.');
                     if (alreadyExists) {
-                        console.log(`WOTD "${Wotd.word}" already in DB, skipping.`);
+                        console.log(`WOTD "${Wotd.word}" for today already in DB, skipping.`);
                     } else {
                         console.error('WOTD add failed:', err.message, err.response?.data || '');
                     }
