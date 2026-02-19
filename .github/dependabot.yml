@@ -1,0 +1,16 @@
+# Dependabot security and version updates
+# https://docs.github.com/en/code-security/dependabot
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directories:
+      - "/"
+      - "/server"
+      - "/client"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    commit-message:
+      prefix: "deps"
